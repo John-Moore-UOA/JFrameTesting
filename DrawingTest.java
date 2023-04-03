@@ -31,12 +31,13 @@ class DrawingTest {
     frame.setTitle("Drawing In JFrames");
     frame.pack();
     frame.setVisible(true);
-
-    update();
   }
 
   public static void main(String args[]) {
-    new DrawingTest();
+    DrawingTest frame1 = new DrawingTest();
+    // frame1.paint(frame1.frame.getGraphics());
+    frame1.update();
+
   }
 
   public void update() {
@@ -49,14 +50,16 @@ class DrawingTest {
   }
 
   public void paint(Graphics g) {
-    // Graphics2D g2 = (Graphics2D) g.create();
-    // g2.setColor(OvalShape.getColour());
-    g.setColor(Color.red);
-    // g2.fillOval(OvalShape.getX(), OvalShape.getY(), 100, 100);
-    // g.fillOval(10, 40, 100, 100);
 
-    g.drawRect(30, 40, 100, 200);
-    g.fillRect(30, 40, 100, 200);
+    g.setColor(Color.red);
+
+    if (ovalShape != null) {
+      System.out.println("OvalShape is not null");
+      g.drawOval(ovalShape.getX(), ovalShape.getY(), 100, 100);
+      g.fillOval(ovalShape.getX(), ovalShape.getY(), 100, 100);
+    } else {
+      System.out.println("OvalShape is null");
+    }
 
     System.out.println("Painted");
 
