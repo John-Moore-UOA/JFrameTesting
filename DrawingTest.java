@@ -21,12 +21,12 @@ class DrawingTest {
   private JPanel panel;
 
   private int frameY = 500;
-  private int frameX = 1300;
+  private int frameX = 500;
 
   public DrawingTest() {
 
     frame = new JFrame();
-    ovalShape = new OvalShape(10, 40);
+    // ovalShape = new OvalShape(10, 40);
 
     panel = new JPanel();
 
@@ -45,9 +45,26 @@ class DrawingTest {
     DrawingTest frame1 = new DrawingTest();
     // frame1.paint(frame1.frame.getGraphics());
     frame1.update();
-    frame1.moveTo(frame1.ovalShape, 200, 400);
-    frame1.moveTo(frame1.ovalShape, 1200, 100);
+    // frame1.moveTo(frame1.ovalShape, 200, 400);
+    // frame1.moveTo(frame1.ovalShape, 1200, 100);
 
+    frame1.drawPattern(frame1.frameY, frame1.frameX);
+  }
+
+  public void placePixel(int i, int j, Color color, Graphics g) {
+    g.setColor(color);
+
+    // so slow
+    g.fillRect(i, j, 1, 1);
+
+  }
+
+  public void drawPattern(int frameHeight, int frameLength) {
+    for (int i = 0; i < frameHeight; i++) {
+      for (int j = 0; j < frameLength; j++) {
+        placePixel(i, j, Color.black, frame.getGraphics());
+      }
+    }
   }
 
   public void update() {
