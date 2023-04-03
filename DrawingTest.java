@@ -45,7 +45,7 @@ class DrawingTest {
   }
 
   public static void main(String args[]) {
-    DrawingTest frame1 = new DrawingTest(700, 700);
+    DrawingTest frame1 = new DrawingTest(700, 800);
     // frame1.paint(frame1.frame.getGraphics());
     // frame1.update();
     // frame1.moveTo(frame1.ovalShape, 200, 400);
@@ -79,10 +79,10 @@ class DrawingTest {
     double cx, tempx, cy;
     byte count = 0;
 
-    cx = (double) row * 0.0042 - 1.95;
+    cx = (double) row * 0.0042 - 2.1;
     cy = (double) col * 0.0042 - 1.35;
 
-    while ((zx * zx + zy * zy < 4) && (count < 120)) {
+    while ((zx * zx + zy * zy < 4) && (count < 125)) {
 
       tempx = zx * zx - zy * zy + cx;
       zy = 2 * zx * zy + cy;
@@ -104,10 +104,13 @@ class DrawingTest {
 
         iterations = fractal(frameLength, frameHeight, i, j);
 
-        Color colour = new Color(iterations, iterations, iterations);
-        placePixel(i, j, colour, frame.getGraphics());
+        Color colour = new Color((255 - iterations), (255 - iterations), (255 - iterations));
 
-        System.out.println("i: " + i + " j: " + j + " iterations: " + iterations);
+        if (iterations > 4) {
+          placePixel(i, j, colour, frame.getGraphics());
+        }
+
+        // System.out.println("i: " + i + " j: " + j + " iterations: " + iterations);
 
       }
     }
