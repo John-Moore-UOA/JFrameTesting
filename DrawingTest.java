@@ -23,7 +23,10 @@ class DrawingTest {
   private int frameY = 500;
   private int frameX = 500;
 
-  public DrawingTest() {
+  public DrawingTest(int height, int length) {
+
+    this.frameX = length;
+    this.frameY = height;
 
     frame = new JFrame();
     // ovalShape = new OvalShape(10, 40);
@@ -42,7 +45,7 @@ class DrawingTest {
   }
 
   public static void main(String args[]) {
-    DrawingTest frame1 = new DrawingTest();
+    DrawingTest frame1 = new DrawingTest(700, 700);
     // frame1.paint(frame1.frame.getGraphics());
     // frame1.update();
     // frame1.moveTo(frame1.ovalShape, 200, 400);
@@ -79,7 +82,7 @@ class DrawingTest {
     cx = (double) row * 0.0042 - 1.95;
     cy = (double) col * 0.0042 - 1.35;
 
-    while ((zx * zx + zy * zy < 4) && (count < 100)) {
+    while ((zx * zx + zy * zy < 4) && (count < 120)) {
 
       tempx = zx * zx - zy * zy + cx;
       zy = 2 * zx * zy + cy;
