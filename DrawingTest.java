@@ -44,11 +44,14 @@ class DrawingTest {
   public static void main(String args[]) {
     DrawingTest frame1 = new DrawingTest();
     // frame1.paint(frame1.frame.getGraphics());
-    frame1.update();
+    // frame1.update();
     // frame1.moveTo(frame1.ovalShape, 200, 400);
     // frame1.moveTo(frame1.ovalShape, 1200, 100);
 
-    frame1.drawPattern(frame1.frameY, frame1.frameX);
+    // frame1.drawPattern(frame1.frameY, frame1.frameX);
+
+    frame1.drawMandelbrot(frame1.frameY, frame1.frameX);
+
   }
 
   public void placePixel(int i, int j, Color color, Graphics g) {
@@ -67,110 +70,45 @@ class DrawingTest {
     }
   }
 
-  public void update() {
-    if (frame.getGraphics() != null) {
-      paint(frame.getGraphics());
-      // System.out.println("update");
-    } else {
-      System.out.println("Graphics is null");
-    }
-  }
+  byte fractal(int width, int height, int row, int col) {
 
-  public void paint(Graphics g) {
+    double zx = 0, zy = 0;
+    double cx, tempx, cy;
+    byte count = 0;
 
-    g.fillOval(300, 910, 10, 10);
+    cx = (double) row * 0.0042 - 1.95;
+    cy = (double) col * 0.0042 - 1.35;
 
-    g.setColor(Color.red);
+    while ((zx * zx + zy * zy < 4) && (count < 100)) {
 
-    if (ovalShape != null) {
-      // System.out.println("OvalShape is not null");
-      g.drawOval(ovalShape.getX(), ovalShape.getY(), 100, 100);
-      g.fillOval(ovalShape.getX(), ovalShape.getY(), 100, 100);
-    } else {
-      // System.out.println("OvalShape is null");
+      tempx = zx * zx - zy * zy + cx;
+      zy = 2 * zx * zy + cy;
+      zx = tempx;
+
+      count++;
     }
 
-    // System.out.println("Painted");
+    return count;
 
   }
 
-  public void moveTo(Item item, int i, int j) {
+  public void drawMandelbrot(int frameHeight, int frameLength) {
 
-    if (i == 0 || j == 0) {
-      System.out.println("i or j is 0");
-      return;
-    }
+    byte iterations = 0;
 
-    if (item == null) {
-      System.out.println("Item is null");
-      return;
-    }
+    for (int i = 0; i < frameHeight; i++) {
+      for (int j = 0; j < frameLength; j++) {
 
-    System.out.println(item + " is Moving..");
-    int differenceInX = i - item.getX();
-    int differenceInY = j - item.getY();
+        iterations = fractal(frameLength, frameHeight, i, j);
 
-    boolean positiveX = true;
-    boolean positiveY = true;
+        Color colour = new Color(iterations, iterations, iterations);
+        placePixel(i, j, colour, frame.getGraphics());
 
-    int stepX = (int) Math.abs(differenceInX);
-    int stepY = (int) Math.abs(differenceInY);
+        System.out.println("i: " + i + " j: " + j + " iterations: " + iterations);
 
-    int steps = 100;
-
-    if (differenceInX < 0) {
-      positiveX = false;
-    }
-
-    if (differenceInY < 0) {
-      positiveY = false;
-    }
-
-    differenceInX = (int) Math.abs(differenceInX);
-    differenceInY = (int) Math.abs(differenceInY);
-
-    if (differenceInX >= differenceInY) {
-      while (steps >= stepX) { // >= or just > ?
-        steps--;
       }
-      while (steps >= stepY) {
-        steps--;
-      }
-
-      stepX /= steps;
-      stepY /= steps;
-
-    } else {
-      while (steps >= stepY) {
-        steps--;
-      }
-      while (steps >= stepX) {
-        steps--;
-      }
-
-      stepX /= steps;
-      stepY /= steps;
-    }
-    System.out.println("stepX: " + stepX);
-    System.out.println("stepY: " + stepY);
-    System.out.println(steps);
-
-    for (int k = 0; k < steps; k++) {
-
-      if (positiveX) {
-        item.addX(stepX);
-      } else {
-        item.addX(-stepX);
-      }
-
-      if (positiveY) {
-        item.addY(stepY);
-      } else {
-        item.addY(-stepY);
-      }
-
-      update();
     }
 
   }
+
 }
